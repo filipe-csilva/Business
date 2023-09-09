@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Business.Migrations
 {
     [DbContext(typeof(SystemContext))]
-    [Migration("20230908204157_ImplatacaoProducts")]
-    partial class ImplatacaoProducts
+    [Migration("20230909030007_CriacaoDoBanco")]
+    partial class CriacaoDoBanco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -176,6 +176,9 @@ namespace Business.Migrations
                         .HasDefaultValue(0f)
                         .HasAnnotation("MinValue", 0.01);
 
+                    b.Property<int>("SubGroupIDId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("SupplierId")
                         .HasColumnType("integer");
 
@@ -183,9 +186,29 @@ namespace Business.Migrations
 
                     b.HasIndex("GroupIDId");
 
+                    b.HasIndex("SubGroupIDId");
+
                     b.HasIndex("SupplierId");
 
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("Business.Models.SubGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubGroup");
                 });
 
             modelBuilder.Entity("Business.Models.Supplier", b =>
@@ -275,6 +298,12 @@ namespace Business.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Business.Models.SubGroup", "SubGroupID")
+                        .WithMany()
+                        .HasForeignKey("SubGroupIDId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Business.Models.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("SupplierId")
@@ -282,6 +311,8 @@ namespace Business.Migrations
                         .IsRequired();
 
                     b.Navigation("GroupID");
+
+                    b.Navigation("SubGroupID");
 
                     b.Navigation("Supplier");
                 });
