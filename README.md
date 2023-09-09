@@ -104,6 +104,6 @@ A API possui as seguintes rotas:
 
 Contribuições são bem-vindas! Se você encontrar algum problema ou tiver sugestões, sinta-se à vontade para abrir uma issue neste repositório.
 
-## Licença
+<!--## Licença
 
-Este projeto está licenciado sob a [MIT License](LICENSE).
+Este projeto está licenciado sob a [MIT License](LICENSE).-->
