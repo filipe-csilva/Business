@@ -20,20 +20,20 @@ Este é um projeto de exemplo que demonstra um aplicativo web usando ASP.NET Cor
 
 - ASP.NET Core 7.0
 - Entity Framework Core (EF Core)
-- SQL Server (ou outro banco de dados de sua escolha)
-- C#
+- Postgres (ou outro banco de dados de sua escolha)
+- C#, .Net
 
 
 ## Pré-requisitos
 
 - .NET Core SDK (versão 7.0 ou superior)
-- SQL Server (ou outro banco de dados compatível)
+- Postgres (ou outro banco de dados compatível)
 - Um ambiente de desenvolvimento integrado (IDE) como Visual Studio ou Visual Studio Code
 
 
 ## Configuração do Banco de Dados
 
-1. Instale o SQL Server e crie um banco de dados para o projeto.
+1. Instale o Postgres e crie um banco de dados para o projeto.
 
 2. Abra o arquivo `appsettings.json` na pasta raiz do projeto.
 
@@ -64,17 +64,41 @@ Este é um projeto de exemplo que demonstra um aplicativo web usando ASP.NET Cor
 
 A API possui as seguintes rotas:
 
-- GET `/api/task`: Retorna todas as tarefas.
-- GET `/api/task/{id}`: Retorna uma tarefa específica pelo ID.
-- POST `/api/task`: Cria uma nova tarefa.
-- PUT `/api/task/{id}`: Atualiza uma tarefa existente pelo ID.
-- DELETE `/api/task/{id}`: Exclui uma tarefa pelo ID.
+- GET `/api/Product`: Retorna todas as tarefas.
+- GET `/api/Product/{id}`: Retorna uma tarefa específica pelo ID.
+- POST `/api/Product`: Cria uma nova tarefa.
+- PUT `/api/Product/{id}`: Atualiza uma tarefa existente pelo ID.
+- DELETE `/api/Product/{id}`: Exclui uma tarefa pelo ID.
 
-- GET `/api/user`: Retorna todos os usuários.
-- GET `/api/user/{id}`: Retorna um usuário específico pelo ID.
-- POST `/api/user`: Cria um novo usuário.
-- PUT `/api/user/{id}`: Atualiza um usuário existente pelo ID.
-- DELETE `/api/user/{id}`: Exclui um usuário pelo ID.
+- GET `/api/Brand`: Retorna todos os usuários.
+- GET `/api/Brand/{id}`: Retorna um usuário específico pelo ID.
+- POST `/api/Brand`: Cria um novo usuário.
+- PUT `/api/Brand/{id}`: Atualiza um usuário existente pelo ID.
+- DELETE `/api/Brand/{id}`: Exclui um usuário pelo ID.
+
+- GET `/api/Group`: Retorna todos os usuários.
+- GET `/api/Group/{id}`: Retorna um usuário específico pelo ID.
+- POST `/api/Group`: Cria um novo usuário.
+- PUT `/api/Group/{id}`: Atualiza um usuário existente pelo ID.
+- DELETE `/api/Group/{id}`: Exclui um usuário pelo ID.
+
+- GET `/api/SubGroup`: Retorna todos os usuários.
+- GET `/api/SubGroup/{id}`: Retorna um usuário específico pelo ID.
+- POST `/api/SubGroup`: Cria um novo usuário.
+- PUT `/api/SubGroup/{id}`: Atualiza um usuário existente pelo ID.
+- DELETE `/api/SubGroup/{id}`: Exclui um usuário pelo ID.
+
+- GET `/api/Client`: Retorna todos os usuários.
+- GET `/api/Client/{id}`: Retorna um usuário específico pelo ID.
+- POST `/api/Client`: Cria um novo usuário.
+- PUT `/api/Client/{id}`: Atualiza um usuário existente pelo ID.
+- DELETE `/api/Client/{id}`: Exclui um usuário pelo ID.
+
+- GET `/api/Supplier`: Retorna todos os usuários.
+- GET `/api/Supplier/{id}`: Retorna um usuário específico pelo ID.
+- POST `/api/Supplier`: Cria um novo usuário.
+- PUT `/api/Supplier/{id}`: Atualiza um usuário existente pelo ID.
+- DELETE `/api/Supplier/{id}`: Exclui um usuário pelo ID.
 
 ## Contribuição
 
