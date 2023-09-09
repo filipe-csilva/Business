@@ -14,6 +14,9 @@ namespace Business.Data.Map
             builder.HasMany(x => x.Suppliers)
                    .WithMany(x => x.Brands)
                    .UsingEntity(x => x.ToTable("SupplierByBrand"));
+
+            builder.HasMany(x => x.Products)
+                   .WithOne(x => x.Brand);
         }
     }
 }

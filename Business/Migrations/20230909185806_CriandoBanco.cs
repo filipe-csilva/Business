@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Business.Migrations
 {
     /// <inheritdoc />
-    public partial class CriacaoDoBanco : Migration
+    public partial class CriandoBanco : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -59,19 +59,6 @@ namespace Business.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SubGroup",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubGroup", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Supplier",
                 columns: table => new
                 {
@@ -94,40 +81,21 @@ namespace Business.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "SubGroup",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
-                    GTIN = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
-                    GroupIDId = table.Column<int>(type: "integer", nullable: false),
-                    SubGroupIDId = table.Column<int>(type: "integer", nullable: false),
-                    PricePurchase = table.Column<float>(type: "numeric(18,2)", nullable: false, defaultValue: 0f),
-                    PriceCoast = table.Column<float>(type: "numeric(18,2)", nullable: false, defaultValue: 0f),
-                    PriceSale = table.Column<float>(type: "numeric(18,2)", nullable: false, defaultValue: 0f),
-                    Description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
-                    SupplierId = table.Column<int>(type: "integer", nullable: false)
+                    GroupId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_SubGroup", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_Group_GroupIDId",
-                        column: x => x.GroupIDId,
+                        name: "FK_SubGroup_Group_GroupId",
+                        column: x => x.GroupId,
                         principalTable: "Group",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Product_SubGroup_SubGroupIDId",
-                        column: x => x.SubGroupIDId,
-                        principalTable: "SubGroup",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Product_Supplier_SupplierId",
-                        column: x => x.SupplierId,
-                        principalTable: "Supplier",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -151,6 +119,52 @@ namespace Business.Migrations
                     table.ForeignKey(
                         name: "FK_SupplierByBrand_Supplier_SuppliersId",
                         column: x => x.SuppliersId,
+                        principalTable: "Supplier",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Product",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    GTIN = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    GroupID = table.Column<int>(type: "integer", nullable: false),
+                    SubGroupID = table.Column<int>(type: "integer", nullable: false),
+                    BrandId = table.Column<int>(type: "integer", nullable: false),
+                    PricePurchase = table.Column<float>(type: "numeric(18,2)", nullable: false, defaultValue: 0f),
+                    PriceCoast = table.Column<float>(type: "numeric(18,2)", nullable: false, defaultValue: 0f),
+                    PriceSale = table.Column<float>(type: "numeric(18,2)", nullable: false, defaultValue: 0f),
+                    Description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
+                    SupplierId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Product_Brand_BrandId",
+                        column: x => x.BrandId,
+                        principalTable: "Brand",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Product_Group_GroupID",
+                        column: x => x.GroupID,
+                        principalTable: "Group",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Product_SubGroup_SubGroupID",
+                        column: x => x.SubGroupID,
+                        principalTable: "SubGroup",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Product_Supplier_SupplierId",
+                        column: x => x.SupplierId,
                         principalTable: "Supplier",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -186,19 +200,29 @@ namespace Business.Migrations
                 column: "ProductsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_GroupIDId",
+                name: "IX_Product_BrandId",
                 table: "Product",
-                column: "GroupIDId");
+                column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_SubGroupIDId",
+                name: "IX_Product_GroupID",
                 table: "Product",
-                column: "SubGroupIDId");
+                column: "GroupID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_SubGroupID",
+                table: "Product",
+                column: "SubGroupID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Product_SupplierId",
                 table: "Product",
                 column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubGroup_GroupId",
+                table: "SubGroup",
+                column: "GroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SupplierByBrand_SuppliersId",
@@ -225,13 +249,13 @@ namespace Business.Migrations
                 name: "Brand");
 
             migrationBuilder.DropTable(
-                name: "Group");
-
-            migrationBuilder.DropTable(
                 name: "SubGroup");
 
             migrationBuilder.DropTable(
                 name: "Supplier");
+
+            migrationBuilder.DropTable(
+                name: "Group");
         }
     }
 }

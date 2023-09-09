@@ -10,6 +10,7 @@ namespace Business.Data.Map
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(30);
+            //builder.HasOne(x => x.Group).WithMany(g => g.subGrups).HasForeignKey(f => f.GroupId);
         }
     }
 }

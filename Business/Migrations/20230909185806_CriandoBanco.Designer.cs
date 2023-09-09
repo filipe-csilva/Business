@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Business.Migrations
 {
     [DbContext(typeof(SystemContext))]
-    [Migration("20230909030007_CriacaoDoBanco")]
-    partial class CriacaoDoBanco
+    [Migration("20230909185806_CriandoBanco")]
+    partial class CriandoBanco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,6 +142,9 @@ namespace Business.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BrandId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Description")
                         .HasMaxLength(1024)
                         .HasColumnType("character varying(1024)");
@@ -150,7 +153,7 @@ namespace Business.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<int>("GroupIDId")
+                    b.Property<int>("GroupID")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -176,7 +179,7 @@ namespace Business.Migrations
                         .HasDefaultValue(0f)
                         .HasAnnotation("MinValue", 0.01);
 
-                    b.Property<int>("SubGroupIDId")
+                    b.Property<int>("SubGroupID")
                         .HasColumnType("integer");
 
                     b.Property<int>("SupplierId")
@@ -184,9 +187,11 @@ namespace Business.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupIDId");
+                    b.HasIndex("BrandId");
 
-                    b.HasIndex("SubGroupIDId");
+                    b.HasIndex("GroupID");
+
+                    b.HasIndex("SubGroupID");
 
                     b.HasIndex("SupplierId");
 
@@ -201,12 +206,17 @@ namespace Business.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("GroupId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.ToTable("SubGroup");
                 });
@@ -292,15 +302,21 @@ namespace Business.Migrations
 
             modelBuilder.Entity("Business.Models.Product", b =>
                 {
-                    b.HasOne("Business.Models.Group", "GroupID")
-                        .WithMany()
-                        .HasForeignKey("GroupIDId")
+                    b.HasOne("Business.Models.Brand", "Brand")
+                        .WithMany("Products")
+                        .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Business.Models.SubGroup", "SubGroupID")
+                    b.HasOne("Business.Models.Group", "Group")
                         .WithMany()
-                        .HasForeignKey("SubGroupIDId")
+                        .HasForeignKey("GroupID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Business.Models.SubGroup", "SubGroup")
+                        .WithMany()
+                        .HasForeignKey("SubGroupID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -310,11 +326,24 @@ namespace Business.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("GroupID");
+                    b.Navigation("Brand");
 
-                    b.Navigation("SubGroupID");
+                    b.Navigation("Group");
+
+                    b.Navigation("SubGroup");
 
                     b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("Business.Models.SubGroup", b =>
+                {
+                    b.HasOne("Business.Models.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("ClientProduct", b =>
@@ -330,6 +359,11 @@ namespace Business.Migrations
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Business.Models.Brand", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Business.Models.Supplier", b =>

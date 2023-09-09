@@ -32,7 +32,15 @@ namespace Business.Controllers
             ReadProductDto productReturn = new ReadProductDto()
             {
                 Id = product.Id,
-                Name = product.Name
+                Name = product.Name,
+                GTIN = product.GTIN,
+                GroupID = product.GroupID,
+                SubGroupID = product.SubGroupID,
+                BrandId = product.BrandId,
+                PricePurchase = product.PricePurchase,
+                PriceCoast = product.PriceCoast,
+                PriceSale = product.PriceSale,
+                Description = product.Description
             };
 
             return productReturn;
@@ -43,7 +51,15 @@ namespace Business.Controllers
         {
             Product product = new Product()
             {
-                Name = productDto.Name
+                Name = productDto.Name,
+                GTIN = productDto.GTIN,
+                GroupID = productDto.GroupID,
+                SubGroupID = productDto.SubGroupID,
+                BrandId = productDto.BrandId,
+                PricePurchase = productDto.PricePurchase,
+                PriceCoast = productDto.PriceCoast,
+                PriceSale = productDto.PriceSale,
+                Description = productDto.Description
             };
 
             await _productRepository.Add(product);
@@ -51,7 +67,15 @@ namespace Business.Controllers
             ReadProductDto productReturn = new ReadProductDto()
             {
                 Id = product.Id,
-                Name = product.Name
+                Name = product.Name,
+                GTIN = product.GTIN,
+                GroupID = product.GroupID,
+                SubGroupID = product.SubGroupID,
+                BrandId = product.BrandId,
+                PricePurchase = product.PricePurchase,
+                PriceCoast = product.PriceCoast,
+                PriceSale = product.PriceSale,
+                Description = product.Description
             };
 
             return productReturn;
@@ -63,7 +87,15 @@ namespace Business.Controllers
             Product productItem = new Product()
             {
                 Id = id,
-                Name = product.Name
+                Name = product.Name,
+                GTIN = product.GTIN,
+                GroupID = product.GroupID,
+                SubGroupID = product.SubGroupID,
+                BrandId = product.BrandId,
+                PricePurchase = product.PricePurchase,
+                PriceCoast = product.PriceCoast,
+                PriceSale = product.PriceSale,
+                Description = product.Description
             };
 
             await _productRepository.Update(productItem, id);
@@ -71,7 +103,15 @@ namespace Business.Controllers
             ReadProductDto updateReturn = new ReadProductDto()
             {
                 Id = productItem.Id,
-                Name = productItem.Name
+                Name = productItem.Name,
+                GTIN = productItem.GTIN,
+                GroupID = productItem.GroupID,
+                SubGroupID = productItem.SubGroupID,
+                BrandId = productItem.BrandId,
+                PricePurchase = productItem.PricePurchase,
+                PriceCoast = productItem.PriceCoast,
+                PriceSale = productItem.PriceSale,
+                Description = productItem.Description
             };
 
             return updateReturn;

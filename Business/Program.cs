@@ -2,6 +2,7 @@ using Business.Data;
 using Business.Repository;
 using Business.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+builder.Services.AddScoped<ISubGroupRepository, SubGroupRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddControllers();
@@ -36,3 +38,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+

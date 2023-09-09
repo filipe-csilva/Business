@@ -7,7 +7,7 @@ namespace Business.Repository
 {
     public abstract class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private readonly SystemContext _dbContext;
+        public readonly SystemContext _dbContext;
 
         public GenericRepository(SystemContext dbContext)
         {
@@ -29,7 +29,7 @@ namespace Business.Repository
             return entity;
         }
 
-        public async Task<ICollection<TEntity>> GetAll()
+        public virtual async Task<ICollection<TEntity>> GetAll()
         {
             return await _dbContext.Set<TEntity>().ToListAsync();
         }

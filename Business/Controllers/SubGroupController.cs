@@ -8,79 +8,85 @@ namespace Business.Controllers
     [ApiController]
     public class SubGroupController : ControllerBase
     {
-        private readonly IGroupRepository _groupRepository;
+        private readonly ISubGroupRepository _subgroupRepository;
 
-        public SubGroupController(IGroupRepository groupRepository)
+        public SubGroupController(ISubGroupRepository groupRepository)
         {
-            _groupRepository = groupRepository;
+            _subgroupRepository = groupRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult<ICollection<ReadGroupDto>>> SearchAll()
+        public async Task<ActionResult<ICollection<ReadSubGroupDto>>> SearchAll()
         {
-            ICollection<Group> groups = await _groupRepository.GetAll();
+            ICollection<SubGroup> groups = await _subgroupRepository.GetAll();
             return Ok(groups);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ReadGroupDto>> SearchById(int id)
+        public async Task<ActionResult<ReadSubGroupDto>> SearchById(int id)
         {
-            Group? group = await _groupRepository.SearchById(id);
+            SubGroup? group = await _subgroupRepository.SearchById(id);
 
             if (group == null) return NotFound();
 
-            ReadGroupDto groupReturn = new ReadGroupDto()
+            ReadSubGroupDto groupReturn = new ReadSubGroupDto()
             {
                 Id = group.Id,
-                Name = group.Name
+                Name = group.Name,
+                GroupId = group.GroupId,
+                Group = group.Group
             };
 
             return groupReturn;
         }
 
         [HttpPost]
-        public async Task<ReadGroupDto> Add(CreateGroupDto groupDto)
+        public async Task<ReadSubGroupDto> Add(CreateSubGroupDto groupDto)
         {
-            Group group = new Group()
+            SubGroup group = new SubGroup()
             {
-                Name = groupDto.Name
+                Name = groupDto.Name,
+                GroupId = groupDto.GroupId
             };
 
-            await _groupRepository.Add(group);
+            await _subgroupRepository.Add(group);
 
-            ReadGroupDto groupReturn = new ReadGroupDto()
+            ReadSubGroupDto groupReturn = new ReadSubGroupDto()
             {
                 Id = group.Id,
-                Name = group.Name
+                Name = group.Name,
+                GroupId = group.GroupId
             };
 
             return groupReturn;
         }
 
         [HttpPut("{id}")]
-        public async Task<ReadGroupDto> UpdateById(UpdateGroupDto group, int id)
+        public async Task<ReadSubGroupDto> UpdateById(UpdateSubGroupDto group, int id)
         {
-            Group groupItem = new Group()
+            SubGroup groupItem = new SubGroup()
             {
                 Id = id,
-                Name = group.Name
+                Name = group.Name,
+                GroupId = group.GroupId
             };
 
-            await _groupRepository.Update(groupItem, id);
+            await _subgroupRepository.Update(groupItem, id);
 
-            ReadGroupDto updateReturn = new ReadGroupDto()
+            ReadSubGroupDto updateReturn = new ReadSubGroupDto()
             {
                 Id = groupItem.Id,
-                Name = groupItem.Name
+                Name = groupItem.Name,
+                GroupId = groupItem.GroupId
             };
 
             return updateReturn;
         }
 
         [HttpDelete("{id}")]
-        public async Task<Group> Delete(int id)
+        public async Task<SubGroup> Delete(int id)
         {
-            Group group = await _groupRepository.Delete(id);
+            SubGroup? group = await _subgroupRepository.Delete(id);
             return group;
         }
     }
